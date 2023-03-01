@@ -6,14 +6,24 @@
   "scripts": {
     "test": "echo \\\"Error: no test specified\\\" && exit 1",
     "build": "webpack",
-    "watch": "webpack --watch"
+    "watch": "webpack --watch",
+    "server": "json-server -p3000 --watch db.json"
   },
   "author": "dwahroianmai",
   "license": "ISC",
   "devDependencies": {
     "css-loader": "^6.7.3",
+    "json-server": "^0.17.2",
     "style-loader": "^3.3.1",
     "webpack": "^5.75.0",
     "webpack-cli": "^5.0.1"
+  },
+  "dependencies": {
+    "@fullcalendar/core": "^6.1.4",
+    "@fullcalendar/daygrid": "^6.1.4",
+    "@fullcalendar/list": "^6.1.4",
+    "@fullcalendar/timegrid": "^6.1.4",
+    "axios": "^1.3.4",
+    "fullcalendar": "^6.1.4"
   }
 }
