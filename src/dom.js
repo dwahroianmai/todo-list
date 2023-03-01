@@ -19,6 +19,8 @@ function createCalendar() {
     height: "100%",
   });
 
+  calendar.addEvent({ title: "title", start: "2023-03-01", end: "2023-03-01" });
+
   calendar.render();
   return calendarEl;
 }
@@ -38,16 +40,40 @@ function createSidebar() {
 
   const groups = document.createElement("h2");
   groups.textContent = "My groups";
+  const triangle = document.createElement("img");
+  triangle.src = "../src/img/triangle.svg";
+  const groupsLine = document.createElement("div");
+  groupsLine.setAttribute("class", "groups-line");
+  groupsLine.appendChild(triangle);
+  groupsLine.appendChild(groups);
+
+  groupsLine.addEventListener("click", () => togglePoint(triangle));
 
   //ul of uls will be here
 
-  sidebar.appendChild(groups);
-
   const settings = document.createElement("h2");
   settings.textContent = "Settings";
-  sidebar.appendChild(settings);
+  const settingsLine = document.createElement("div");
+  const triangleClone = triangle.cloneNode();
+  settingsLine.setAttribute("class", "settings-line");
+  settingsLine.appendChild(triangleClone);
+  settingsLine.appendChild(settings);
+
+  settingsLine.addEventListener("click", () => togglePoint(triangleClone));
+
+  sidebar.appendChild(groupsLine);
+  sidebar.appendChild(settingsLine);
 
   return sidebar;
+}
+
+function togglePoint(elem) {
+  if (elem.style.transform === "rotate(90deg)") {
+    elem.style.transition = ".3s";
+    elem.style.transform = "rotate(180deg)";
+  } else {
+    elem.style.transform = "rotate(90deg)";
+  }
 }
 
 function createFooter() {
