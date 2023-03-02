@@ -29,8 +29,70 @@ h1 {
 #sidebar {
   display: flex;
   flex-direction: column;
-  gap: 25px;
+  gap: 40px;
   color: rgb(54, 54, 54);
+}
+
+#info {
+  padding: 40px;
+  z-index: 10000;
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgb(240, 240, 240);
+  box-shadow: 0 0 10px grey;
+  border-radius: 5px;
+  font-family: "Lato", sans-serif;
+}
+
+#info img {
+  height: 30px;
+  position: absolute;
+  top: 5px;
+  right: 5px;
+}
+
+#info img:hover {
+  transform: scale(1.07);
+}
+
+#info img:active {
+  transform: scale(1);
+}
+
+#form {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  font-size: 20px;
+}
+
+input {
+  appearance: none;
+  border: none;
+  padding: 7px;
+}
+
+input[type="text"] {
+  background-color: transparent;
+  border-bottom: 1px solid grey;
+}
+
+input[type="text"]::placeholder {
+  font-size: 20px;
+}
+
+input[type="datetime-local"] {
+  font-family: "Lato", sans-serif;
+  font-size: 20px;
+}
+
+.lines {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-left: 20px;
 }
 
 #sidebar > button {
@@ -52,16 +114,30 @@ h1 {
   color: rgb(54, 54, 54);
 }
 
-.groups-line,
-.settings-line {
+.sb-line {
   display: flex;
   gap: 10px;
   align-items: center;
 }
-.groups-line img,
-.settings-line img {
+.sb-line img {
   height: 15px;
   transform: rotate(90deg);
+}
+
+.invisible {
+  height: 0;
+  transition: 0.3s ease;
+  overflow-y: hidden;
+}
+
+.visible {
+  height: 100px;
+  transition: 0.3s ease;
+  overflow-y: scroll;
+}
+
+.visible::-webkit-scrollbar {
+  appearance: none;
 }
 
 #footer {
