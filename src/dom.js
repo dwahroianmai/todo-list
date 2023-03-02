@@ -28,9 +28,31 @@ function createSidebar() {
   const sidebar = document.createElement("div");
   sidebar.setAttribute("id", "sidebar");
 
+  const logoDiv = document.createElement("div");
+  logoDiv.setAttribute("id", "logo-div");
+
+  const checkbox = document.createElement("img");
+  checkbox.src = "../src/img/checkbox-outline.svg";
+
   const logo = document.createElement("h1");
   logo.textContent = "ListIt";
-  sidebar.appendChild(logo);
+
+  logoDiv.addEventListener("mouseover", () => {
+    checkbox.setAttribute(
+      "style",
+      "transform: rotate(-10deg); transition: 0.3s ease"
+    );
+  });
+  logoDiv.addEventListener("mouseout", () => {
+    checkbox.setAttribute(
+      "style",
+      "transform: rotate(0deg); transition: 0.3s ease"
+    );
+  });
+
+  logoDiv.appendChild(checkbox);
+  logoDiv.appendChild(logo);
+  sidebar.appendChild(logoDiv);
 
   const addNew = document.createElement("button");
   addNew.textContent = "New task or event";
@@ -50,7 +72,7 @@ function createSidebar() {
   groupsLine.appendChild(groups);
 
   const groupList = document.createElement("div");
-  groupList.setAttribute("class", "group-list invisible");
+  groupList.setAttribute("class", "invisible");
   //function will be here
   const group1 = document.createElement("h3");
   group1.textContent = "Work";
@@ -72,14 +94,26 @@ function createSidebar() {
   settingsLine.setAttribute("class", "sb-line");
   settingsLine.appendChild(triangleClone);
   settingsLine.appendChild(settings);
+  const settingsList = document.createElement("div");
+  settingsList.setAttribute("class", "invisible");
+  const colorTheme = document.createElement("h3");
+  colorTheme.textContent = "Change color mode";
+  settingsList.appendChild(colorTheme);
+  settingsList.childNodes.forEach((elem) => {
+    elem.style.display = "none";
+    elem.style.marginLeft = "25px";
+  });
 
-  settingsLine.addEventListener("click", () => togglePoint(triangleClone));
+  settingsLine.addEventListener("click", () =>
+    togglePoint(triangleClone, settingsList)
+  );
 
   const sbLines = document.createElement("div");
   sbLines.setAttribute("class", "lines");
   sbLines.appendChild(groupsLine);
   sbLines.appendChild(groupList);
   sbLines.appendChild(settingsLine);
+  sbLines.appendChild(settingsList);
 
   sidebar.appendChild(sbLines);
 
@@ -107,9 +141,11 @@ function addNewEvent() {
   const form = document.createElement("form");
   form.setAttribute("id", "form");
   form.method = "post";
+  form.action = "../db.json";
   const title = document.createElement("input");
   title.type = "text";
   title.placeholder = "Add title";
+  title.name = "title";
   const startLabel = document.createElement("label");
   startLabel.textContent = "Starts: ";
   startLabel.setAttribute("for", "start");
@@ -117,6 +153,7 @@ function addNewEvent() {
   start.setAttribute("id", "start");
   startLabel.appendChild(start);
   start.type = "datetime-local";
+  start.name = "start";
   const endLabel = document.createElement("label");
   endLabel.textContent = "Ends: ";
   endLabel.setAttribute("for", "end");
@@ -124,10 +161,25 @@ function addNewEvent() {
   end.setAttribute("id", "end");
   endLabel.appendChild(end);
   end.type = "datetime-local";
+  end.name = "end";
+
+  const allDayDiv = document.createElement("div");
+  allDayDiv.id = "all-day-div";
+
+  const allDay = document.createElement("input");
+  allDay.type = "checkbox";
+  allDay.name = "allDay";
+  allDay.id = "allDay";
+  const allDayLabel = document.createElement("label");
+  allDayLabel.setAttribute("for", "allDay");
+  allDayLabel.textContent = "All day";
+  allDayDiv.appendChild(allDay);
+  allDayDiv.appendChild(allDayLabel);
 
   form.appendChild(title);
   form.appendChild(startLabel);
   form.appendChild(endLabel);
+  form.appendChild(allDayDiv);
   info.appendChild(form);
 
   close.addEventListener("click", (e) => {

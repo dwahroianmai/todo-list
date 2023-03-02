@@ -9,10 +9,20 @@ body {
   overflow: hidden;
 }
 
+#logo-div {
+  display: flex;
+  align-items: center;
+  align-self: center;
+  gap: 10px;
+}
+
+#logo-div img {
+  height: 52px;
+}
+
 h1 {
   font-weight: 700;
   font-size: 52px;
-  align-self: center;
 }
 
 #content {
@@ -68,7 +78,8 @@ h1 {
   font-size: 20px;
 }
 
-input {
+input[type="text"],
+input[type="datetime-local"] {
   appearance: none;
   border: none;
   padding: 7px;
