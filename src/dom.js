@@ -37,6 +37,7 @@ function createSidebar() {
   const logo = document.createElement("h1");
   logo.textContent = "ListIt";
 
+  //move checkbox near the logo
   logoDiv.addEventListener("mouseover", () => {
     checkbox.setAttribute(
       "style",
@@ -58,8 +59,12 @@ function createSidebar() {
   addNew.textContent = "New task or event";
   sidebar.appendChild(addNew);
 
+  document.querySelector("#content").appendChild(addNewEvent());
+
   addNew.addEventListener("click", () => {
-    document.querySelector("#content").appendChild(addNewEvent());
+    document
+      .querySelector("#info")
+      .setAttribute("style", "opacity: 100%; transition: .2s ease");
   });
 
   const groups = document.createElement("h2");
@@ -135,6 +140,7 @@ function togglePoint(elem, list) {
 function addNewEvent() {
   const info = document.createElement("div");
   info.setAttribute("id", "info");
+  info.style.opacity = "0";
   const close = document.createElement("img");
   close.src = "../src/img/close-outline.svg";
   info.appendChild(close);

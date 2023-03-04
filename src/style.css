@@ -137,13 +137,13 @@ input[type="datetime-local"] {
 
 .invisible {
   height: 0;
-  transition: 0.3s ease;
+  transition: 0.5s ease;
   overflow-y: hidden;
 }
 
 .visible {
   height: 100px;
-  transition: 0.3s ease;
+  transition: 0.5s ease;
   overflow-y: scroll;
 }
 
@@ -160,6 +160,10 @@ input[type="datetime-local"] {
   align-items: center;
   justify-content: center;
   gap: 15px;
+}
+
+#calendar button {
+  background-color: rgb(54, 54, 54);
 }
 
 #footer img {
