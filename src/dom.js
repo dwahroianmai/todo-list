@@ -2,6 +2,8 @@ import { Calendar } from "@fullcalendar/core";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import listPlugin from "@fullcalendar/list";
+import createEvent from "./todo-functions";
+import axios from "axios";
 
 //creates a calendar with fullcalendar library
 function createCalendar() {
@@ -19,6 +21,13 @@ function createCalendar() {
     height: "100%",
   });
 
+  let events;
+  axios.get("http://localhost:3005/events").then((response) => {
+    events = response.data;
+    for (let i = 0; i < events.length; i++) {
+      calendar.addEvent(events[i]);
+    }
+  });
   calendar.render();
   return calendarEl;
 }
@@ -141,51 +150,94 @@ function addNewEvent() {
   const info = document.createElement("div");
   info.setAttribute("id", "info");
   info.style.opacity = "0";
+
   const close = document.createElement("img");
   close.src = "../src/img/close-outline.svg";
   info.appendChild(close);
+
   const form = document.createElement("form");
   form.setAttribute("id", "form");
-  form.method = "post";
-  form.action = "../db.json";
+
   const title = document.createElement("input");
   title.type = "text";
   title.placeholder = "Add title";
   title.name = "title";
+
   const startLabel = document.createElement("label");
   startLabel.textContent = "Starts: ";
   startLabel.setAttribute("for", "start");
+
   const start = document.createElement("input");
   start.setAttribute("id", "start");
   startLabel.appendChild(start);
-  start.type = "datetime-local";
+  start.type = "date";
   start.name = "start";
+
   const endLabel = document.createElement("label");
   endLabel.textContent = "Ends: ";
   endLabel.setAttribute("for", "end");
+
   const end = document.createElement("input");
   end.setAttribute("id", "end");
   endLabel.appendChild(end);
-  end.type = "datetime-local";
+  end.type = "date";
   end.name = "end";
 
   const allDayDiv = document.createElement("div");
-  allDayDiv.id = "all-day-div";
+  allDayDiv.className = "checkbox-div";
 
   const allDay = document.createElement("input");
   allDay.type = "checkbox";
   allDay.name = "allDay";
   allDay.id = "allDay";
+  allDay.checked = true;
+
   const allDayLabel = document.createElement("label");
   allDayLabel.setAttribute("for", "allDay");
   allDayLabel.textContent = "All day";
   allDayDiv.appendChild(allDay);
   allDayDiv.appendChild(allDayLabel);
 
+  const repeatsDiv = document.createElement("div");
+  repeatsDiv.className = "checkbox-div";
+
+  const repeats = document.createElement("input");
+  repeats.type = "checkbox";
+  repeats.name = "repeats";
+  repeats.id = "repeats";
+  repeats.checked = true;
+  repeats.value = false;
+
+  const repeatsLabel = document.createElement("label");
+  repeatsLabel.setAttribute("for", "repeats");
+  repeatsLabel.textContent = "Does not repeat";
+
+  repeatsDiv.appendChild(repeats);
+  repeatsDiv.appendChild(repeatsLabel);
+
+  const intervals = document.createElement("select");
+  intervals.style.display = "none";
+
+  const daily = document.createElement("option");
+  daily.textContent = "Every day";
+  intervals.appendChild(daily);
+
+  const submit = document.createElement("button");
+  submit.type = "submit";
+  submit.textContent = "Add event";
+
+  submit.addEventListener("click", (e) => {
+    e.preventDefault();
+    createEvent(title.value, start.value, end.value, allDay.checked);
+  });
+
   form.appendChild(title);
   form.appendChild(startLabel);
   form.appendChild(endLabel);
   form.appendChild(allDayDiv);
+  form.appendChild(repeatsDiv);
+  form.appendChild(intervals);
+  form.appendChild(submit);
   info.appendChild(form);
 
   close.addEventListener("click", (e) => {
