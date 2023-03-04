@@ -50,7 +50,7 @@ h1 {
   top: 40%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background-color: rgb(240, 240, 240);
+  background-color: white;
   box-shadow: 0 0 10px grey;
   border-radius: 5px;
   font-family: "Lato", sans-serif;
@@ -75,11 +75,11 @@ h1 {
   display: flex;
   flex-direction: column;
   gap: 30px;
-  font-size: 20px;
+  font-size: 24px;
 }
 
 input[type="text"],
-input[type="datetime-local"] {
+input[type="date"] {
   appearance: none;
   border: none;
   padding: 7px;
@@ -88,15 +88,45 @@ input[type="datetime-local"] {
 input[type="text"] {
   background-color: transparent;
   border-bottom: 1px solid grey;
+  font-size: 24px;
 }
 
 input[type="text"]::placeholder {
+  font-size: 24px;
+}
+
+input[type="date"] {
+  font-family: "Lato", sans-serif;
   font-size: 20px;
 }
 
-input[type="datetime-local"] {
-  font-family: "Lato", sans-serif;
+input[type="checkbox"] {
+  height: 20px;
+  width: 20px;
+}
+
+#info button {
+  appearance: none;
+  border: none;
   font-size: 20px;
+  padding: 7px;
+  border-radius: 5px;
+}
+
+#info button:hover {
+  background-color: rgb(54, 54, 54);
+  color: white;
+}
+
+#info button:active {
+  background-color: rgb(240, 240, 240);
+  color: rgb(54, 54, 54);
+}
+
+.checkbox-div {
+  display: flex;
+  gap: 15px;
+  align-items: center;
 }
 
 .lines {
