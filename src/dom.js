@@ -5,6 +5,20 @@ import listPlugin from "@fullcalendar/list";
 import createEvent from "./todo-functions";
 import axios from "axios";
 
+/*
+TODO:
+  allow user to change color theme
+  add dark theme ?
+  mobile version
+  
+  implement groups
+  allow user to create repeated events
+  editing and deleting events
+
+  DONE allow user to create events that start and end at specific time
+  
+*/
+
 //creates a calendar with fullcalendar library
 function createCalendar() {
   const calendarEl = document.createElement("div");
@@ -19,6 +33,22 @@ function createCalendar() {
       right: "dayGridMonth,timeGridWeek,listWeek",
     },
     height: "100%",
+  });
+
+  document.querySelector("#submit").addEventListener("click", (e) => {
+    e.preventDefault();
+    const title = document.querySelector("#title");
+    const start = document.querySelector("#start");
+    const end = document.querySelector("#end");
+    const allDay = document.querySelector("#allDay");
+    calendar.addEvent(
+      createEvent(title.value, start.value, end.value, allDay.checked)
+    );
+    calendar.render();
+    e.target.parentNode.parentNode.setAttribute(
+      "style",
+      "opacity: 0%; transition: .2s ease"
+    );
   });
 
   let events;
@@ -87,16 +117,19 @@ function createSidebar() {
 
   const groupList = document.createElement("div");
   groupList.setAttribute("class", "invisible");
-  //function will be here
-  const group1 = document.createElement("h3");
-  group1.textContent = "Work";
-  const group2 = document.createElement("h3");
-  group2.textContent = "Traveling";
-  groupList.appendChild(group1);
-  groupList.appendChild(group2);
-  groupList.childNodes.forEach((el) => {
-    el.style.display = "none";
-    el.style.marginLeft = "25px";
+  let groupsDb;
+  axios.get("http://localhost:3005/groups").then((response) => {
+    groupsDb = response.data;
+    for (let i = 0; i < groupsDb.length; i++) {
+      const h3 = document.createElement("h3");
+      h3.textContent = groupsDb[i];
+      groupList.appendChild(h3);
+      console.log("works");
+    }
+    groupList.childNodes.forEach((el) => {
+      el.style.display = "none";
+      el.style.marginLeft = "25px";
+    });
   });
 
   groupsLine.addEventListener("click", () => togglePoint(triangle, groupList));
@@ -162,6 +195,7 @@ function addNewEvent() {
   title.type = "text";
   title.placeholder = "Add title";
   title.name = "title";
+  title.id = "title";
 
   const startLabel = document.createElement("label");
   startLabel.textContent = "Starts: ";
@@ -170,8 +204,9 @@ function addNewEvent() {
   const start = document.createElement("input");
   start.setAttribute("id", "start");
   startLabel.appendChild(start);
-  start.type = "date";
+  start.type = "datetime-local";
   start.name = "start";
+  start.id = "start";
 
   const endLabel = document.createElement("label");
   endLabel.textContent = "Ends: ";
@@ -180,8 +215,9 @@ function addNewEvent() {
   const end = document.createElement("input");
   end.setAttribute("id", "end");
   endLabel.appendChild(end);
-  end.type = "date";
+  end.type = "datetime-local";
   end.name = "end";
+  end.id = "end";
 
   const allDayDiv = document.createElement("div");
   allDayDiv.className = "checkbox-div";
@@ -222,14 +258,24 @@ function addNewEvent() {
   daily.textContent = "Every day";
   intervals.appendChild(daily);
 
+  const groupsDiv = document.createElement("div");
+  groupsDiv.className = "checkbox-div";
+
+  const groups = document.createElement("input");
+  groups.id = "groups-inp";
+  groups.name = "groups";
+  groups.type = "checkbox";
+
+  const groupsLabel = document.createElement("label");
+  groupsLabel.textContent = "Add to group";
+  groupsLabel.setAttribute("for", "groups-inp");
+  groupsDiv.appendChild(groups);
+  groupsDiv.appendChild(groupsLabel);
+
   const submit = document.createElement("button");
   submit.type = "submit";
   submit.textContent = "Add event";
-
-  submit.addEventListener("click", (e) => {
-    e.preventDefault();
-    createEvent(title.value, start.value, end.value, allDay.checked);
-  });
+  submit.id = "submit";
 
   form.appendChild(title);
   form.appendChild(startLabel);
@@ -237,6 +283,7 @@ function addNewEvent() {
   form.appendChild(allDayDiv);
   form.appendChild(repeatsDiv);
   form.appendChild(intervals);
+  form.appendChild(groupsDiv);
   form.appendChild(submit);
   info.appendChild(form);
 
@@ -247,6 +294,14 @@ function addNewEvent() {
     );
   });
 
+  groupsDiv.addEventListener("click", (e) => {
+    if (groups.checked) {
+      console.log(groupList);
+    } else {
+      console.log("also works");
+    }
+  });
+
   return info;
 }
 
@@ -254,13 +309,13 @@ function createFooter() {
   const footer = document.createElement("div");
   footer.setAttribute("id", "footer");
   footer.textContent = "dwahroianmai 2023";
-  const ghlink = document.createElement("a");
-  ghlink.href = "https://github.com/dwahroianmai";
-  ghlink.target = "blank";
-  const ghlogo = document.createElement("img");
-  ghlogo.src = "../src/img/github-mark/github-mark.svg";
-  ghlink.appendChild(ghlogo);
-  footer.appendChild(ghlink);
+  const ghLink = document.createElement("a");
+  ghLink.href = "https://github.com/dwahroianmai";
+  ghLink.target = "blank";
+  const ghLogo = document.createElement("img");
+  ghLogo.src = "../src/img/github-mark/github-mark.svg";
+  ghLink.appendChild(ghLogo);
+  footer.appendChild(ghLink);
 
   return footer;
 }

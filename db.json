@@ -1,18 +1,4 @@
 {
-  "events": [
-    {
-      "title": "new event",
-      "start": "2023-03-05",
-      "end": "2023-03-06",
-      "allDay": false,
-      "id": 1
-    },
-    {
-      "title": "another event",
-      "start": "2023-03-07",
-      "end": "2023-03-09",
-      "allDay": false,
-      "id": 2
-    }
-  ]
+  "events": [],
+  "groups": ["work", "family", "traveling", "pets", "vacation", "university"]
 }
