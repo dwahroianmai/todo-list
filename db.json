@@ -1,4 +1,33 @@
 {
-  "events": [],
-  "groups": ["work", "family", "traveling", "pets", "vacation", "university"]
+  "events": [
+    {
+      "title": "диана жопа",
+      "start": "",
+      "end": "",
+      "allDay": true,
+      "id": 1
+    },
+    {
+      "title": "диана жопа",
+      "start": "2023-03-06T10:00",
+      "end": "",
+      "allDay": true,
+      "id": 2
+    },
+    {
+      "title": "диана жопа",
+      "start": "",
+      "end": "",
+      "allDay": true,
+      "id": 3
+    },
+    {
+      "title": "",
+      "start": "",
+      "end": "",
+      "allDay": true,
+      "id": 4
+    }
+  ],
+  "groups": []
 }

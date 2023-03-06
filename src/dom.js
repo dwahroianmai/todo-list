@@ -122,9 +122,8 @@ function createSidebar() {
     groupsDb = response.data;
     for (let i = 0; i < groupsDb.length; i++) {
       const h3 = document.createElement("h3");
-      h3.textContent = groupsDb[i];
+      h3.textContent = groupsDb[i].name;
       groupList.appendChild(h3);
-      console.log("works");
     }
     groupList.childNodes.forEach((el) => {
       el.style.display = "none";
@@ -272,6 +271,36 @@ function addNewEvent() {
   groupsDiv.appendChild(groups);
   groupsDiv.appendChild(groupsLabel);
 
+  const groupList = document.createElement("div");
+  let groupsDb;
+  axios.get("http://localhost:3005/groups").then((response) => {
+    groupsDb = response.data;
+    for (let i = 0; i < groupsDb.length; i++) {
+      const group = document.createElement("h3");
+      group.textContent = groupsDb[i].name;
+      groupList.appendChild(group);
+    }
+  });
+  const addGroup = document.createElement("button");
+  const newGroup = document.createElement("input");
+  groupList.appendChild(addGroup);
+  groupList.appendChild(newGroup);
+  addGroup.type = "button";
+  addGroup.textContent = "Add new group";
+  groupList.className = "invisible";
+  groupList.childNodes.forEach((el) => (el.style.display = "none"));
+
+  addGroup.addEventListener("click", () => {
+    if (newGroup.style.display === "none") {
+      newGroup.style.display = "block";
+    } else {
+      console.log(newGroup.value);
+      axios
+        .post("http://localhost:3005/groups", { name: newGroup.value })
+        .then((response) => console.log(response));
+    }
+  });
+
   const submit = document.createElement("button");
   submit.type = "submit";
   submit.textContent = "Add event";
@@ -284,6 +313,7 @@ function addNewEvent() {
   form.appendChild(repeatsDiv);
   form.appendChild(intervals);
   form.appendChild(groupsDiv);
+  form.appendChild(groupList);
   form.appendChild(submit);
   info.appendChild(form);
 
@@ -294,11 +324,14 @@ function addNewEvent() {
     );
   });
 
-  groupsDiv.addEventListener("click", (e) => {
+  groupsDiv.addEventListener("click", () => {
     if (groups.checked) {
-      console.log(groupList);
+      groupList.className = "visible";
+      groupList.childNodes.forEach((el) => (el.style.display = "block"));
+      newGroup.style.display = "none";
     } else {
-      console.log("also works");
+      groupList.className = "invisible";
+      groupList.childNodes.forEach((el) => (el.style.display = "none"));
     }
   });
 
