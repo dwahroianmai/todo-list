@@ -1,33 +1,17 @@
 {
-  "events": [
+  "events": [],
+  "groups": [
     {
-      "title": "диана жопа",
-      "start": "",
-      "end": "",
-      "allDay": true,
+      "name": "test",
       "id": 1
     },
     {
-      "title": "диана жопа",
-      "start": "2023-03-06T10:00",
-      "end": "",
-      "allDay": true,
+      "name": "another test",
       "id": 2
     },
     {
-      "title": "диана жопа",
-      "start": "",
-      "end": "",
-      "allDay": true,
+      "name": "last one???",
       "id": 3
-    },
-    {
-      "title": "",
-      "start": "",
-      "end": "",
-      "allDay": true,
-      "id": 4
     }
-  ],
-  "groups": []
+  ]
 }

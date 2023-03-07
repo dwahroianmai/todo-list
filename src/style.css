@@ -181,6 +181,14 @@ input[type="checkbox"] {
   appearance: none;
 }
 
+#calendar button {
+  background-color: rgb(54, 54, 54);
+}
+
+.group-item:hover {
+  border: 1px solid grey;
+}
+
 #footer {
   height: 40px;
   position: absolute;
@@ -190,10 +198,6 @@ input[type="checkbox"] {
   align-items: center;
   justify-content: center;
   gap: 15px;
-}
-
-#calendar button {
-  background-color: rgb(54, 54, 54);
 }
 
 #footer img {

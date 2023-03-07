@@ -117,6 +117,7 @@ function createSidebar() {
 
   const groupList = document.createElement("div");
   groupList.setAttribute("class", "invisible");
+  groupList.setAttribute("id", "sb-groups");
   let groupsDb;
   axios.get("http://localhost:3005/groups").then((response) => {
     groupsDb = response.data;
@@ -279,6 +280,7 @@ function addNewEvent() {
       const group = document.createElement("h3");
       group.textContent = groupsDb[i].name;
       groupList.appendChild(group);
+      group.className = "group-item";
     }
   });
   const addGroup = document.createElement("button");
@@ -297,7 +299,16 @@ function addNewEvent() {
       console.log(newGroup.value);
       axios
         .post("http://localhost:3005/groups", { name: newGroup.value })
-        .then((response) => console.log(response));
+        .then(() => {
+          const added = document.createElement("h3");
+          added.textContent = newGroup.value;
+          groupList.appendChild(added);
+          const forSb = added.cloneNode();
+          forSb.textContent = newGroup.value;
+          forSb.style.marginLeft = "25px";
+          document.querySelector("#sb-groups").appendChild(forSb);
+          newGroup.value = "";
+        });
     }
   });
 
