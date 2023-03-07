@@ -1,17 +1,61 @@
 {
-  "events": [],
-  "groups": [
+  "events": [
     {
-      "name": "test",
-      "id": 1
-    },
-    {
-      "name": "another test",
+      "title": "second test",
+      "start": "2023-03-07T10:00",
+      "end": "",
+      "allDay": true,
+      "group": [
+        "new group"
+      ],
       "id": 2
     },
     {
-      "name": "last one???",
+      "title": "another test",
+      "start": "2023-03-08T10:00",
+      "end": "",
+      "allDay": true,
+      "group": [
+        "new group"
+      ],
       "id": 3
+    },
+    {
+      "title": "event",
+      "start": "2023-03-10",
+      "end": "",
+      "allDay": true,
+      "group": [
+        "family",
+        "travel"
+      ],
+      "id": 4
+    },
+    {
+      "title": "testing no group",
+      "start": "2023-03-10T10:00",
+      "end": "",
+      "allDay": true,
+      "group": [],
+      "id": 5
+    }
+  ],
+  "groups": [
+    {
+      "name": "new group",
+      "id": 1
+    },
+    {
+      "name": "family",
+      "id": 2
+    },
+    {
+      "name": "work",
+      "id": 3
+    },
+    {
+      "name": "travel",
+      "id": 4
     }
   ]
 }

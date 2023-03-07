@@ -11,10 +11,11 @@ TODO:
   add dark theme ?
   mobile version
   
-  implement groups
+  allow user to remove groups
   allow user to create repeated events
   editing and deleting events
 
+  DONE implement groups
   DONE allow user to create events that start and end at specific time
   
 */
@@ -41,8 +42,17 @@ function createCalendar() {
     const start = document.querySelector("#start");
     const end = document.querySelector("#end");
     const allDay = document.querySelector("#allDay");
+    const chosenGroups = Array.from(document.querySelectorAll(".group-item"))
+      .filter((group) => group.style.backgroundColor === "lightgrey")
+      .map((el) => el.textContent);
     calendar.addEvent(
-      createEvent(title.value, start.value, end.value, allDay.checked)
+      createEvent(
+        title.value,
+        start.value,
+        end.value,
+        allDay.checked,
+        chosenGroups
+      )
     );
     calendar.render();
     e.target.parentNode.parentNode.setAttribute(
@@ -119,16 +129,36 @@ function createSidebar() {
   groupList.setAttribute("class", "invisible");
   groupList.setAttribute("id", "sb-groups");
   let groupsDb;
+  let events;
   axios.get("http://localhost:3005/groups").then((response) => {
     groupsDb = response.data;
-    for (let i = 0; i < groupsDb.length; i++) {
-      const h3 = document.createElement("h3");
-      h3.textContent = groupsDb[i].name;
-      groupList.appendChild(h3);
-    }
-    groupList.childNodes.forEach((el) => {
-      el.style.display = "none";
-      el.style.marginLeft = "25px";
+    console.log(groupsDb);
+    axios.get("http://localhost:3005/events").then((response) => {
+      events = response.data;
+      console.log(events);
+      for (let i = 0; i < groupsDb.length; i++) {
+        const h3 = document.createElement("h3");
+        const ul = document.createElement("ul");
+        h3.textContent = groupsDb[i].name;
+        console.log(groupsDb[i]);
+        groupList.appendChild(h3);
+        for (let j = 0; j < events.length; j++) {
+          if (
+            events[j].group.filter((group) => group === groupsDb[i].name)
+              .length === 1
+          ) {
+            const li = document.createElement("li");
+            li.textContent = events[j].title;
+            ul.appendChild(li);
+            //.style.marginLeft = "10px";
+          }
+          groupList.appendChild(ul);
+        }
+      }
+      groupList.childNodes.forEach((el) => {
+        el.style.display = "none";
+        el.style.marginLeft = "25px";
+      });
     });
   });
 
@@ -282,7 +312,18 @@ function addNewEvent() {
       groupList.appendChild(group);
       group.className = "group-item";
     }
+    document.querySelectorAll(".group-item").forEach((group) =>
+      group.addEventListener("click", (e) => {
+        console.log(e.target.textContent);
+        if (e.target.style.backgroundColor === "white") {
+          e.target.style.backgroundColor = "lightgrey";
+        } else {
+          e.target.style.backgroundColor = "white";
+        }
+      })
+    );
   });
+
   const addGroup = document.createElement("button");
   const newGroup = document.createElement("input");
   groupList.appendChild(addGroup);
@@ -302,6 +343,14 @@ function addNewEvent() {
         .then(() => {
           const added = document.createElement("h3");
           added.textContent = newGroup.value;
+          added.className = "group-item";
+          added.addEventListener("click", (e) => {
+            if (e.target.style.backgroundColor === "white") {
+              e.target.style.backgroundColor = "lightgrey";
+            } else {
+              e.target.style.backgroundColor = "white";
+            }
+          });
           groupList.appendChild(added);
           const forSb = added.cloneNode();
           forSb.textContent = newGroup.value;

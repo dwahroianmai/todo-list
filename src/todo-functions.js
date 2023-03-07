@@ -1,7 +1,7 @@
 import axios from "axios";
 
-function createEvent(title, start, end, allDay, repeats) {
-  const newEvent = { title, start, end, allDay, repeats };
+function createEvent(title, start, end, allDay, group) {
+  const newEvent = { title, start, end, allDay, group };
   axios
     .post("http://localhost:3005/events", newEvent)
     .then((response) => console.log(response));
