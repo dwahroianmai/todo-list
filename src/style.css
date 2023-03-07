@@ -43,6 +43,16 @@ h1 {
   color: rgb(54, 54, 54);
 }
 
+.group-div {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+
+.group-div img {
+  height: 20px;
+}
+
 #info {
   padding: 40px;
   z-index: 10000;

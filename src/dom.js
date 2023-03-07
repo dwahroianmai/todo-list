@@ -142,11 +142,18 @@ function createSidebar() {
       events = response.data;
       console.log(events);
       for (let i = 0; i < groupsDb.length; i++) {
+        const groupDiv = document.createElement("div");
+        groupDiv.className = "group-div";
+        const remove = document.createElement("img");
+        remove.src = "../src/img/remove-circle-outline.svg";
+        remove.addEventListener("click", (e) => {});
         const h3 = document.createElement("h3");
+        groupDiv.appendChild(h3);
+        groupDiv.appendChild(remove);
         const ul = document.createElement("ul");
         h3.textContent = groupsDb[i].name;
         console.log(groupsDb[i]);
-        groupList.appendChild(h3);
+        groupList.appendChild(groupDiv);
         for (let j = 0; j < events.length; j++) {
           if (
             events[j].group.filter((group) => group === groupsDb[i].name)
@@ -206,7 +213,7 @@ function togglePoint(elem, list) {
     elem.style.transition = ".3s";
     list.setAttribute("class", "visible");
     elem.style.transform = "rotate(180deg)";
-    list.childNodes.forEach((elem) => (elem.style.display = "block"));
+    list.childNodes.forEach((elem) => (elem.style.display = "flex"));
   } else {
     elem.style.transform = "rotate(90deg)";
     list.setAttribute("class", "invisible");
