@@ -46,7 +46,7 @@ function createCalendar() {
     const end = document.querySelector("#end");
     const allDay = document.querySelector("#allDay");
     const chosenGroups = Array.from(document.querySelectorAll(".group-item"))
-      .filter((group) => group.style.backgroundColor === "lightgrey")
+      .filter((group) => group.style.borderLeft === "5px solid grey")
       .map((el) => el.textContent);
     calendar.addEvent(
       createEvent(
@@ -366,6 +366,11 @@ function addNewEvent() {
     }
   });
 
+  const description = document.createElement("textarea");
+  description.id = "description";
+  description.name = "description";
+  description.placeholder = "Description";
+
   const submit = document.createElement("button");
   submit.type = "submit";
   submit.textContent = "Add event";
@@ -379,6 +384,7 @@ function addNewEvent() {
   form.appendChild(intervals);
   form.appendChild(groupsDiv);
   form.appendChild(groupList);
+  form.appendChild(description);
   form.appendChild(submit);
   info.appendChild(form);
 
