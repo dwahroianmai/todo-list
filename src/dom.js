@@ -21,6 +21,8 @@ TODO:
 */
 
 //creates a calendar with fullcalendar library
+
+// CALENDAR HERE
 function createCalendar() {
   const calendarEl = document.createElement("div");
   calendarEl.setAttribute("id", "calendar");
@@ -36,6 +38,7 @@ function createCalendar() {
     height: "100%",
   });
 
+  // NEW EVENT
   document.querySelector("#submit").addEventListener("click", (e) => {
     e.preventDefault();
     const title = document.querySelector("#title");
@@ -72,11 +75,12 @@ function createCalendar() {
   return calendarEl;
 }
 
-//create a sidebar
+//SIDEBAR HERE
 function createSidebar() {
   const sidebar = document.createElement("div");
   sidebar.setAttribute("id", "sidebar");
 
+  // LOGO
   const logoDiv = document.createElement("div");
   logoDiv.setAttribute("id", "logo-div");
 
@@ -86,7 +90,6 @@ function createSidebar() {
   const logo = document.createElement("h1");
   logo.textContent = "ListIt";
 
-  //move checkbox near the logo
   logoDiv.addEventListener("mouseover", () => {
     checkbox.setAttribute(
       "style",
@@ -104,6 +107,7 @@ function createSidebar() {
   logoDiv.appendChild(logo);
   sidebar.appendChild(logoDiv);
 
+  //ADD NEW EVENT BUTTON
   const addNew = document.createElement("button");
   addNew.textContent = "New task or event";
   sidebar.appendChild(addNew);
@@ -116,6 +120,7 @@ function createSidebar() {
       .setAttribute("style", "opacity: 100%; transition: .2s ease");
   });
 
+  //GROUPS
   const groups = document.createElement("h2");
   groups.textContent = "My groups";
   const triangle = document.createElement("img");
@@ -150,7 +155,6 @@ function createSidebar() {
             const li = document.createElement("li");
             li.textContent = events[j].title;
             ul.appendChild(li);
-            //.style.marginLeft = "10px";
           }
           groupList.appendChild(ul);
         }
@@ -315,16 +319,17 @@ function addNewEvent() {
     document.querySelectorAll(".group-item").forEach((group) =>
       group.addEventListener("click", (e) => {
         console.log(e.target.textContent);
-        if (e.target.style.backgroundColor === "white") {
-          e.target.style.backgroundColor = "lightgrey";
+        if (e.target.style.borderLeft !== "5px solid grey") {
+          e.target.style.borderLeft = "5px solid grey";
         } else {
-          e.target.style.backgroundColor = "white";
+          e.target.style.borderLeft = "none";
         }
       })
     );
   });
 
   const addGroup = document.createElement("button");
+  addGroup.id = "add-group-btn";
   const newGroup = document.createElement("input");
   groupList.appendChild(addGroup);
   groupList.appendChild(newGroup);
@@ -345,10 +350,10 @@ function addNewEvent() {
           added.textContent = newGroup.value;
           added.className = "group-item";
           added.addEventListener("click", (e) => {
-            if (e.target.style.backgroundColor === "white") {
-              e.target.style.backgroundColor = "lightgrey";
+            if (e.target.style.borderLeft !== "5px solid grey") {
+              e.target.style.borderLeft = "5px solid grey";
             } else {
-              e.target.style.backgroundColor = "white";
+              e.target.style.borderLeft = "none";
             }
           });
           groupList.appendChild(added);

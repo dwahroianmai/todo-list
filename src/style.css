@@ -186,7 +186,15 @@ input[type="checkbox"] {
 }
 
 .group-item:hover {
-  border: 1px solid grey;
+  color: grey;
+}
+
+#add-group-btn {
+  width: 100%;
+}
+
+.fc-day-today {
+  background-color: rgb(240, 240, 240) !important;
 }
 
 #footer {
