@@ -11,11 +11,12 @@ TODO:
   add dark theme ?
   mobile version
   
-  allow user to remove groups
   allow user to create repeated events
   editing and deleting events
+  forbid groups with the same name
 
   DONE implement groups
+  DONE allow user to remove groups
   DONE allow user to create events that start and end at specific time
   
 */
@@ -146,7 +147,20 @@ function createSidebar() {
         groupDiv.className = "group-div";
         const remove = document.createElement("img");
         remove.src = "../src/img/remove-circle-outline.svg";
-        remove.addEventListener("click", (e) => {});
+        remove.addEventListener("click", (e) => {
+          let groupsData;
+          let groupName = e.target.parentNode.firstChild.textContent;
+          console.log(groupName);
+          axios.get("http://localhost:3005/groups").then((response) => {
+            groupsData = response.data;
+            const id = groupsData.filter((group) => group.name === groupName)[0]
+              .id;
+            console.log(id);
+            axios.delete(`http://localhost:3005/groups/${id}`);
+          });
+          e.target.parentNode.remove();
+          document.querySelector("#sb-groups").firstChild.remove();
+        });
         const h3 = document.createElement("h3");
         groupDiv.appendChild(h3);
         groupDiv.appendChild(remove);
