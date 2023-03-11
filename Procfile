@@ -1,1 +1,1 @@
-web: json-server -p3005 --watch db.json
+web: json-server --watch db.json
