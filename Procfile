@@ -1,1 +1,1 @@
-web: json-server -p3001 --watch db.json
+web: npm run server
